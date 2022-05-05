@@ -31,13 +31,14 @@ public:
 		{
 			SetRetCode(TabOK);
 		}
+		Efficiency = 1;
 		CurPos++;
 		pRecs[CurPos] = new TTabRecord(k, pVal);
 		DataCount++;
 	}
 	//найти элемент, который нужно удалить(findrecord) и переместить последний
 	//элемент переместить на место удал€емого, очистить пам€ть от старого элемента
-	virtual void DelRecord(TKey k) {
+	virtual int DelRecord(TKey k) {
 		if (FindRecord(k) != nullptr) {
 			int i;
 			for (i = 0; i < DataCount; i++) {
@@ -49,6 +50,9 @@ public:
 			delete pRecs[DataCount];
 			DataCount--;
 			SetRetCode(TabOK);
+			return TabOK;
 		}
+		else
+			return TabNoRecord;
 	}
 };

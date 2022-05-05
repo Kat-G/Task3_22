@@ -51,7 +51,7 @@ public:
 	}
 
 	std::string ToString() override {
-
+		return nullptr;
 	}
 	friend class TArrayTable;
 	friend class TSortTable;

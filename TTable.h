@@ -31,13 +31,13 @@ public:
 	bool IsEmpty() const {
 		return DataCount == 0;
 	}
-	virtual bool IsFull() = 0;
+	virtual bool IsFull() const = 0;
 	virtual PTDataValue FindRecord(TKey key) = 0;
 	virtual void InsRecord(TKey k, PTDataValue pVal) = 0;
-	virtual int Delete(TKey k) = 0;
+	virtual int DelRecord(TKey k) = 0;
 	virtual bool Reset() = 0;
 	virtual bool GoNext() = 0;
-	virtual bool IsTabEnded() = 0;
+	virtual bool IsTabEnded() const = 0;
 	virtual TKey GetKey() const = 0;
 	virtual PTDataValue GetValue() const = 0;
 	friend std::ostream &operator<<(std::ostream& os, TTable& tab) {
