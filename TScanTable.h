@@ -20,7 +20,35 @@ public:
 		SetRetCode(TabNoRecord);
 		return nullptr;
 	}
-	virtual void InsRecord(TKey k, PTDataValue pVal); //создать ttabrecord и вставить в конец
-	virtual void DelRecord(TKey k); //найти элемент, который нужно удалить(findrecord) и переместить последний
-	                                //элемент переместить на место удаляемого, очистить память от старого элемента
+	virtual void InsRecord(TKey k, PTDataValue pVal)
+	{
+		if (IsFull())
+		{
+			SetRetCode(TabFull);
+			return;
+		}
+		else
+		{
+			SetRetCode(TabOK);
+		}
+		CurPos++;
+		pRecs[CurPos] = new TTabRecord(k, pVal);
+		DataCount++;
+	}
+	//найти элемент, который нужно удалить(findrecord) и переместить последний
+	//элемент переместить на место удаляемого, очистить память от старого элемента
+	virtual void DelRecord(TKey k) {
+		if (FindRecord(k) != nullptr) {
+			int i;
+			for (i = 0; i < DataCount; i++) {
+				if (pRecs[i]->Key == k)
+					break;
+			}
+			pRecs[i]->Key = pRecs[DataCount]->Key;
+			pRecs[i]->pValue = pRecs[DataCount]->pValue;
+			delete pRecs[DataCount];
+			DataCount--;
+			SetRetCode(TabOK);
+		}
+	}
 };

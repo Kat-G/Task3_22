@@ -13,8 +13,8 @@ typedef std::string TKey;
 class TTable : public TDataCom
 {
 protected:
-	int DataCount;
-	int Efficiency;
+	int DataCount; // количество записей в таблице
+	int Efficiency;  // показатель эффективности выполнения операции
 public:
 	TTable() {
 		DataCount = 0;
@@ -34,7 +34,7 @@ public:
 	virtual bool IsFull() = 0;
 	virtual PTDataValue FindRecord(TKey key) = 0;
 	virtual void InsRecord(TKey k, PTDataValue pVal) = 0;
-	virtual int Dalete(TKey k) = 0;
+	virtual int Delete(TKey k) = 0;
 	virtual bool Reset() = 0;
 	virtual bool GoNext() = 0;
 	virtual bool IsTabEnded() = 0;

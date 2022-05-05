@@ -7,8 +7,8 @@ class TArrayTable : public TTable
 {
 protected:
 	PTTabRecord* pRecs;
-	int TabSize;
-	int CurPos;
+	int TabSize;// макс. возм.количество записей в таблице
+	int CurPos;// номер текущей записи
 public:
 	TArrayTable(int size = 100) :TabSize(size) {
 		pRecs = new PTTabRecord[TabSize];

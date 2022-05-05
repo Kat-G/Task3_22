@@ -32,11 +32,13 @@ public:
 		return pValue;
 	}
 	virtual TDataValue* GetCopy() {
-		return new TTabRecord(Key, pValue); //!!!!!!
+		return new TTabRecord(Key, pValue);
 	}
 	TTabRecord& operator=(const TTabRecord& tr) {
+		if (this == &tr)
+			return *this;
 		Key = tr.Key;
-		pValue = tr.pValue;
+		pValue = tr.pValue->GetCopy();
 	}
 	virtual bool operator==(const TTabRecord& tr) const {
 		return Key == tr.Key;
