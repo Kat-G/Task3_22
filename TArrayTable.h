@@ -74,7 +74,7 @@ public:
 		return (pos == -1) ? nullptr : pRecs[pos]->pValue;
 	}
 	bool IsTabEnded() const {
-		return CurPos >= TabSize;
+		return CurPos >= DataCount;
 	}
 	bool Reset() {
 		CurPos = 0;
@@ -92,4 +92,5 @@ public:
 		CurPos = ((pos > -1) && (pos < DataCount)) ? pos : 0;
 		return IsTabEnded();
 	}
+	friend class TSortTable;
 };

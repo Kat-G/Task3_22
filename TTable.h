@@ -43,8 +43,10 @@ public:
 	friend std::ostream &operator<<(std::ostream& os, TTable& tab) {
 		for (tab.Reset(); !tab.IsTabEnded(); tab.GoNext())
 		{
-			os << "Key: " << tab.GetKey() << " Val: " << tab.GetValue()->ToString() << std::endl;
+			//os << "Key: " << tab.GetKey() << " Val: " << tab.GetValue()->ToString() << std::endl;
+			os << "Название книги: " << tab.GetKey() << " Характеристики: " << tab.GetValue()->ToString() << std::endl;
 		}
 		return os;
 	}
 };
+typedef TTable* PTTable;
