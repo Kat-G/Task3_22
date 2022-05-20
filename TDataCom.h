@@ -11,6 +11,8 @@ protected:
 public:
 
 	TDataCom() {};
-	int GetRetCode();
+	int GetRetCode() {
+		return RetCode;
+	}
 
 };
