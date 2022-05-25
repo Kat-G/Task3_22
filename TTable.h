@@ -8,6 +8,7 @@
 #define TabNoRecord -103
 #define TabRecDbl -104
 #define TabNoMem -105
+#define TabMaxSize 25;
 typedef std::string TKey;
 
 class TTable : public TDataCom
@@ -34,7 +35,7 @@ public:
 	virtual bool IsFull() const = 0;
 	virtual PTDataValue FindRecord(TKey key) = 0;
 	virtual void InsRecord(TKey k, PTDataValue pVal) = 0;
-	virtual int DelRecord(TKey k) = 0;
+	virtual void DelRecord(TKey k) = 0;
 	virtual bool Reset() = 0;
 	virtual bool GoNext() = 0;
 	virtual bool IsTabEnded() const = 0;

@@ -40,7 +40,7 @@ public:
 	}
 	//найти элемент, который нужно удалить(findrecord) и переместить последний
 	//элемент переместить на место удал€емого, очистить пам€ть от старого элемента
-	virtual int DelRecord(TKey k) {
+	virtual void DelRecord(TKey k) {
 		if (FindRecord(k) != nullptr) {
 			int i;
 			for (i = 0; i < DataCount; i++) {
@@ -52,10 +52,9 @@ public:
 			delete pRecs[DataCount-1];
 			DataCount--;
 			SetRetCode(TabOK);
-			return TabOK;
 		}
 		else
-			return TabNoRecord;
+			SetRetCode(TabNoRecord);
 	}
 	void Parse() {
 		setlocale(LC_ALL, "rus");

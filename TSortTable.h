@@ -1,6 +1,8 @@
 #pragma once
 #include "TScanTable.h"
-enum TSortMethod{Insert,Merge,Quick};
+#include <fstream>
+#include <iostream>
+enum TSortMethod{ Quick,Insert, Merge };
 
 class TSortTable:public TScanTable {
 protected:
@@ -43,15 +45,15 @@ protected:
 		delete pTemp;
 	}
 	void QuickSort(PTTabRecord* pMem, int DataCount) {
-		
-		int pivot = DataCount / 2;
-		QuickSplit(pMem, DataCount, pivot);
-		/*if (j > 0) {
-			QuickSort(pMem, j + 1);
+		int piv = DataCount / 2;
+		if (DataCount > 1) {
+			QuickSplit(pMem, DataCount, piv);
+			QuickSort(pMem, DataCount - piv);
+			if (DataCount % 2 == 0)
+				QuickSort(pMem + piv, piv);
+			else
+				QuickSort(pMem + piv + 1, piv);
 		}
-		if (i < DataCount) {
-			QuickSort(&pMem[i], DataCount - i);
-		}*/
 	}
 
 	void MergeSorter(PTTabRecord*& pData, PTTabRecord*& pBuf, int Size) { //запуск разделения
@@ -85,36 +87,37 @@ protected:
 		{
 			pBuf[i++] = pData2[i2++];
 		}
-		pData = pBuf;
-		pBuf = pData1;
+		/*pData = pBuf;
+		pBuf = pData1;*/
+		for (int j = 0; j < i; j++)
+			pData[j] = pBuf[j];
 		Efficiency += n1 + n2;
 	}
 	void QuickSplit(PTTabRecord* pData, int Size, int& pivot) {
-		int i = 0, j = DataCount - 1;
+		int i = 0, j = Size - 1;
+		PTTabRecord x = pData[pivot];
 		do {
-			while (pData[i] < pData[pivot]) {
-				i++;
-			}
-			while (pData[j] > pData[pivot]) {
-				j--;
-			}
+			while ((pData[i]->Key) < (x->Key)) i++;
+			while ((pData[j]->Key) > (x->Key)) j--;
 
 			if (i <= j) {
-				PTTabRecord tmp = pData[i];
-				pData[i] = pData[j];
-				pData[j] = tmp;
-
-				i++;
-				j--;
+				if ((pData[i]->Key) > (pData[j]->Key)) {
+					std::swap(pData[i], pData[j]);
+					Efficiency += 2;
+				}
+				x = pData[pivot];
+				if ((pData[i]->Key) == (x->Key)) j--;
+				else if ((pData[j]->Key) == (x->Key)) i++;
+				else {
+					i++;
+					j--;
+				}
 			}
 		} while (i <= j);
 	}
 public:
 	TSortTable(int Size = 20) :TScanTable(Size) { };
 	TSortTable(const TScanTable& tab) {
-		*this = tab;
-	}
-	TSortTable(const TSortTable& tab) {
 		*this = tab;
 	}
 	TSortTable& operator=(const TScanTable& tab) {
@@ -191,7 +194,7 @@ public:
 			}
 		}
 	}
-	virtual int DelRecord(TKey key) override {
+	virtual void DelRecord(TKey key) override {
 		PTDataValue temp = FindRecord(key);
 		if (temp == nullptr) {
 			SetRetCode(TabNoRecord);
@@ -203,6 +206,5 @@ public:
 			pRecs[--DataCount] = nullptr;
 			SetRetCode(TabOK);
 		}
-		return GetRetCode();
 	}
 };
