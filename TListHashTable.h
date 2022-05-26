@@ -37,32 +37,58 @@ public:
 		return tmp;
 	}
 	virtual void InsRecord(TKey key, PTDataValue pValue) override {
+		CurList = HashFunc(key) % TabSize;
+		std::list<PTTabRecord>* lst = pList + CurList;
+		lst->push_back(new TTabRecord(key, pValue));
 
 	}
 	virtual void DelRecord(TKey key) override {
-
+		SetRetCode(TabOK);
+		CurList = HashFunc(key) % TabSize;
+		PTDataValue tmp=nullptr; 
+		for (auto rec : pList[CurList]) {
+			Efficiency++;
+			if (rec->Key == key) {
+				tmp = rec;
+				break;
+			}
+		}
+		if (tmp == nullptr) {
+			SetRetCode(TabNoRecord);
+			return;
+		}
+		pList[CurList].remove((PTTabRecord)tmp);
 	}
 	virtual TKey GetKey() const override {
-
+		return (*startChain)->Key;
 	}
 	virtual PTDataValue GetValue() const override {
-
+		return (*startChain)->pValue;
 	}
 	virtual bool Reset() override {
 		CurList = 0;
-		startChain = pList->begin();
-		return IsTabEnded();
+		while (pList[CurList].size() == 0) {
+			CurList++;
+			if (IsTabEnded()) {
+				return false;
+			}
+		}
+		startChain = pList[CurList].begin();
+		return !IsTabEnded();
 	}
 	virtual bool GoNext() override {
-		if (startChain++ != pList[CurList].end()){
-			return IsTabEnded();
+		if (++startChain != pList[CurList].end()){
+			return !IsTabEnded();
 		}
-		if (IsTabEnded()) {
-			return true;
+		while (pList[++CurList].size() == 0) {
+
+			CurList++;
+			if (IsTabEnded()) {
+				return false;
+			}
 		}
-		CurList++;
 		startChain = pList[CurList].begin();
-		return IsTabEnded();
+		return !IsTabEnded();
 	}
 	virtual bool IsTabEnded() const override {
 		return CurList >= TabSize;
