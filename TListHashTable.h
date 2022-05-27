@@ -77,7 +77,7 @@ public:
 		return !IsTabEnded();
 	}
 	virtual bool GoNext() override {
-		if (++startChain != pList[CurList].end()){
+		/*if (++startChain != pList[CurList].end()){
 			return !IsTabEnded();
 		}
 		while (pList[++CurList].size() == 0) {
@@ -87,6 +87,22 @@ public:
 				return false;
 			}
 		}
+		startChain = pList[CurList].begin();
+		return !IsTabEnded();*/
+
+		startChain++;
+		if (startChain != pList[CurList].end()) {
+			return !IsTabEnded();
+		}
+		CurList++;
+		while (pList[CurList].size() == 0 && !IsTabEnded())
+		{
+			CurList++;
+		}
+		if (IsTabEnded()) {
+			return false;
+		}
+
 		startChain = pList[CurList].begin();
 		return !IsTabEnded();
 	}

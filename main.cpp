@@ -15,6 +15,14 @@ int main() {
 
 	parser.ParseAndInsert(&table);
 
+	std::cout << table << std::endl;
+
+	table.DelRecord("Шерлок Холмс");
 
 	std::cout << table << std::endl;
+
+	table.DelRecord("Призрак Оперы");
+
+	std::cout << table << std::endl;
+
 }
