@@ -77,19 +77,6 @@ public:
 		return !IsTabEnded();
 	}
 	virtual bool GoNext() override {
-		/*if (++startChain != pList[CurList].end()){
-			return !IsTabEnded();
-		}
-		while (pList[++CurList].size() == 0) {
-
-			CurList++;
-			if (IsTabEnded()) {
-				return false;
-			}
-		}
-		startChain = pList[CurList].begin();
-		return !IsTabEnded();*/
-
 		startChain++;
 		if (startChain != pList[CurList].end()) {
 			return !IsTabEnded();
@@ -108,5 +95,26 @@ public:
 	}
 	virtual bool IsTabEnded() const override {
 		return CurList >= TabSize;
+	}
+
+	bool IsListEnded() const {
+		std::list<PTTabRecord>::iterator tmp;
+		tmp = startChain;
+		return ++tmp == pList[CurList].end();
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, TListHashTable& tab) {
+		for (tab.Reset(); !tab.IsTabEnded(); tab.GoNext())
+		{
+			os << "Название книги: " << tab.GetKey() << " Характеристики: " << tab.GetValue()->ToString();
+			if (!tab.IsListEnded()) {
+				os << " - ";
+			}
+			else {
+				os << std::endl;
+			}
+			//os << " "<< tab.HashFunc(tab.GetKey()) << std::endl;
+		}
+		return os;
 	}
 };

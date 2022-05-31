@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SVParser.h" />
+    <ClInclude Include="CSVParser.h" />
     <ClInclude Include="TArrayTable.h" />
     <ClInclude Include="TBookValue.h" />
     <ClInclude Include="TDataCom.h" />

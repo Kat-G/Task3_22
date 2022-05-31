@@ -8,7 +8,7 @@ protected:
 		uint64_t hashValue = 0;
 		int len = key.length();
 		for (int i = 0; i < len; i++) {
-			hashValue = (hashValue << 3) + key[i];
+			hashValue = (hashValue << 3) + key.length();
 		}
 		return hashValue;
 	}

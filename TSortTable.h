@@ -2,7 +2,7 @@
 #include "TScanTable.h"
 #include <fstream>
 #include <iostream>
-enum TSortMethod{ Quick,Insert, Merge };
+enum TSortMethod{ Insert, Quick, Merge };
 
 class TSortTable:public TScanTable {
 protected:
@@ -117,7 +117,8 @@ protected:
 	}
 public:
 	TSortTable(int Size = 20) :TScanTable(Size) { };
-	TSortTable(const TScanTable& tab) {
+	TSortTable(const TScanTable& tab, TSortMethod sm) {
+		SortMethod = sm;
 		*this = tab;
 	}
 	TSortTable& operator=(const TScanTable& tab) {
